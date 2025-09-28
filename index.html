@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Andrew Copeland · Engineering Portfolio</title>
+  <meta name="description" content="Mechanical engineering portfolio: product design, R&D, biomedical, controls, and manufacturing projects." />
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root{
+      --bg: #0b0c0f;          /* dark background (auto-switched) */
+      --panel:#12141a;
+      --text:#e8eaf2;
+      --muted:#a9afc3;
+      --brand:#7c9cff;        /* accent */
+      --ok:#00c389;
+      --ring:rgba(124,156,255,.45);
+      --card:#0f1117;
+      --border:#1b1f2a;
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7f8fb; --panel:#ffffff; --text:#0b1021; --muted:#56607a; --brand:#355cff; --ring:rgba(53,92,255,.25);
+        --card:#ffffff; --border:#e6e9f2;
+      }
+    }
+    html,body{height:100%}
+    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background:var(--bg); color:var(--text);}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1000px; margin:0 auto; padding:24px}
+    .nav{display:flex; gap:16px; align-items:center; justify-content:space-between; position:sticky; top:0; backdrop-filter:saturate(140%) blur(6px); background:color-mix(in hsl, var(--bg) 70%, transparent); border-bottom:1px solid var(--border); z-index:5}
+    .nav a.logo{font-weight:700; letter-spacing:.2px; color:var(--text);}
+    .nav .links{display:flex; gap:16px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:8px; background:var(--brand); color:#fff; border-radius:12px; padding:10px 14px; border:0; cursor:pointer}
+    .btn.secondary{background:transparent; color:var(--text); border:1px solid var(--border)}
+    .btn:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
+
+    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:center; padding:32px 0}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px}
+    .pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:var(--panel)}
+    h1{font-size:clamp(28px, 4vw, 44px); margin:12px 0}
+    h2{font-size:clamp(22px, 3vw, 28px); margin:0 0 12px}
+    p{line-height:1.6; color:var(--muted)}
+    .grid{display:grid; gap:16px}
+    .grid.projects{grid-template-columns:repeat(auto-fill, minmax(280px,1fr))}
+
+    .project h3{margin:6px 0 4px; font-size:18px}
+    .project .thumb{width:100%; height:160px; object-fit:cover; border-radius:12px; border:1px solid var(--border); background:var(--panel);}
+    .tags{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0}
+    .tag{font-size:11px; border:1px solid var(--border); padding:4px 8px; border-radius:999px; color:var(--muted)}
+    .meta{font-size:12px; color:var(--muted)}
+    .footer{margin:40px 0 16px; font-size:13px; color:var(--muted); display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between}
+    .list{display:grid; gap:10px}
+    .row{display:flex; gap:12px; align-items:center}
+
+    /* small utils */
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .spacer{height:8px}
+    .right{justify-content:flex-end}
+
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container" style="display:flex; align-items:center; gap:12px; justify-content:space-between">
+      <a class="logo" href="#top">Andrew Copeland</a>
+      <div class="links" role="navigation" aria-label="Primary">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <button class="btn secondary" id="toggleTheme" type="button" aria-pressed="false">Toggle theme</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="card">
+        <span class="pill">Mechanical Engineer · Product & R&D</span>
+        <h1>Designing, prototyping, and validating hardware that ships.</h1>
+        <p>
+          M.S. Mechanical Engineering @ UCSD. Experience across microgravity simulators (RPM), biomedical devices (pessary; IRB trial prep), motion control, and manufacturing. Comfortable bridging CAD ⇄ analysis ⇄ firmware to move ideas into tested hardware.
+        </p>
+        <div class="row">
+          <a class="btn" href="#projects">View projects</a>
+          <a class="btn secondary" href="mailto:apcopeland20@gmail.com">Email me</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Quick links</h2>
+        <div class="list">
+          <div class="row"><span aria-hidden>📄</span> <a href="#" onclick="alert('Drop your PDF in the repo and link it here.')">Download Résumé (PDF)</a></div>
+          <div class="row"><span aria-hidden>💻</span> <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></div>
+          <div class="row"><span aria-hidden>🔗</span> <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="grid">
+      <h2>Highlighted projects</h2>
+      <div class="grid projects">
+        <!-- Project 1 -->
+        <article class="card project">
+          <img class="thumb" src="images/project1.jpg" alt="Project 1 thumbnail" />
+          <div class="meta">2025 · Mechanical Design</div>
+          <h3>Project One Title</h3>
+          <p>One‑sentence description of the project outcome and your contribution.</p>
+          <div class="tags">
+            <span class="tag">CAD</span><span class="tag">Prototyping</span><span class="tag">Testing</span>
+          </div>
+          <div class="row right">
+            <a class="btn secondary" href="#">More details</a>
+          </div>
+        </article>
+        <!-- Project 2 -->
+        <article class="card project">
+          <img class="thumb" src="images/project2.jpg" alt="Project 2 thumbnail" />
+          <div class="meta">2024 · R&D</div>
+          <h3>Project Two Title</h3>
+          <p>One‑sentence description focused on the problem, approach, and result.</p>
+          <div class="tags">
+            <span class="tag">DFM</span><span class="tag">Fixture</span><span class="tag">Report</span>
+          </div>
+          <div class="row right">
+            <a class="btn secondary" href="#">More details</a>
+          </div>
+        </article>
+        <!-- Project 3 -->
+        <article class="card project">
+          <img class="thumb" src="images/project3.jpg" alt="Project 3 thumbnail" />
+          <div class="meta">2024 · Embedded</div>
+          <h3>Project Three Title</h3>
+          <p>One‑sentence description of the system you built and how it was validated.</p>
+          <div class="tags">
+            <span class="tag">Firmware</span><span class="tag">Sensors</span><span class="tag">MATLAB</span>
+          </div>
+          <div class="row right">
+            <a class="btn secondary" href="#">More details</a>
+          </div>
+        </article>
+        <!-- Project 4 -->
+        <article class="card project">
+          <img class="thumb" src="images/project4.jpg" alt="Project 4 thumbnail" />
+          <div class="meta">2023 · Analysis</div>
+          <h3>Project Four Title</h3>
+          <p>One‑sentence description highlighting analysis, constraints, and result.</p>
+          <div class="tags">
+            <span class="tag">CFD</span><span class="tag">Heat Transfer</span><span class="tag">Python</span>
+          </div>
+          <div class="row right">
+            <a class="btn secondary" href="#">More details</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="card">
+        <details>
+          <summary><strong>More projects</strong> (toggle)</summary>
+          <ul>
+            <li>Large‑diameter custom centrifuge (swing‑bucket) — rebuild & test.</li>
+            <li>Alcohol biosensor clinical workflow — Phase I/II sessions.</li>
+            <li>PID temperature bath; CFD library for supersonic flat‑plate; youBOT control in CoppeliaSim.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section id="experience" class="grid">
+      <h2>Experience</h2>
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <strong>Research Engineer — UC San Diego</strong>
+          <span class="meta">2024–2025</span>
+        </div>
+        <ul>
+          <li>Designed & built a two‑axis RPM; coordinated Python⇄MCU control; reliability improvements for v2.</li>
+          <li>Led CAD & prototyping for pessary + applicator; prepared for limited IRB clinical use.</li>
+          <li>Authored test plans, fixtures, and verification protocols; collaborated with OBGYN team.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <strong>Teaching & Research — UCSD</strong>
+          <span class="meta">2023–2024</span>
+        </div>
+        <ul>
+          <li>Grader for Design of Machine Elements; supported labs and project reviews.</li>
+          <li>Developed MATLAB tooling for shaft design evaluation; CFD & dynamics coursework projects.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="skills" class="grid">
+      <h2>Skills</h2>
+      <div class="card">
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px">
+          <div>
+            <strong>Design & MFG</strong>
+            <div class="spacer"></div>
+            <div class="meta">SolidWorks, Onshape, GD&T, DFM/DFA, 3D printing (SLA/FFF), machining basics</div>
+          </div>
+          <div>
+            <strong>Analysis</strong>
+            <div class="spacer"></div>
+            <div class="meta">Statics/dynamics, heat transfer, CFD basics, MATLAB, Python, controls</div>
+          </div>
+          <div>
+            <strong>Systems</strong>
+            <div class="spacer"></div>
+            <div class="meta">Arduino, Raspberry Pi, sensors/IMU, data logging, test fixtures</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="grid">
+      <h2>Contact</h2>
+      <div class="card">
+        <p>Open to roles in product design, biomedical, R&D, and test engineering.</p>
+        <div class="row">
+          <a class="btn" href="mailto:apcopeland20@gmail.com">Email</a>
+          <a class="btn secondary" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn secondary" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>© <span id="y"></span> Andrew Copeland</span>
+      <span class="meta">Built with a single HTML file. Hosted on GitHub Pages.</span>
+    </footer>
+  </main>
+
+  <script>
+    // year
+    document.getElementById('y').textContent = new Date().getFullYear();
+    // theme toggle
+    const btn = document.getElementById('toggleTheme');
+    const key = 'andrew-theme';
+    try{
+      const saved = localStorage.getItem(key);
+      if(saved) document.documentElement.dataset.theme = saved;
+      btn.addEventListener('click',()=>{
+        const cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = cur;
+        localStorage.setItem(key, cur);
+        btn.setAttribute('aria-pressed', String(cur==='dark'));
+      });
+    }catch(e){}
+  </script>
+  <style>
+    /* minimal light/dark toggle using data-theme */
+    :root[data-theme="light"]{ --bg:#f7f8fb; --panel:#ffffff; --text:#0b1021; --muted:#56607a; --brand:#355cff; --ring:rgba(53,92,255,.25); --card:#ffffff; --border:#e6e9f2; }
+    :root[data-theme="dark"]{ --bg:#0b0c0f; --panel:#12141a; --text:#e8eaf2; --muted:#a9afc3; --brand:#7c9cff; --ring:rgba(124,156,255,.45); --card:#0f1117; --border:#1b1f2a; }
+  </style>
+</body>
+</html>
