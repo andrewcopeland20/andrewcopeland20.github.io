@@ -150,8 +150,20 @@
           <div class="tags">
             <span class="tag">DFM</span><span class="tag">Fixture</span><span class="tag">Report</span>
           </div>
-          <div class="row right">
-            <a class="btn secondary" href="#">More details</a>
+         <div class="row right">
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
+              More details
+            </button>
+          </div>
+
+          <div class="details" aria-hidden="true">
+            <div class="spacer"></div>
+            <p><strong>Overview:</strong> Pessary</p>
+            <ul>
+              <li>Designed over 15 prototypes in SolidWorks</li>
+              <li>Gathered feedback from gynaecologists and patients</li>
+              <li>Reviewed designs with injection molding vendor and implemented feedback before prototype molding run of 100 silicone parts</li>
+            </ul>
           </div>
         </article>
         <!-- Centrifuge -->
@@ -164,20 +176,45 @@
             <span class="tag">Firmware</span><span class="tag">Sensors</span><span class="tag">MATLAB</span>
           </div>
           <div class="row right">
-            <a class="btn secondary" href="#">More details</a>
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
+              More details
+            </button>
+          </div>
+
+          <div class="details" aria-hidden="true">
+            <div class="spacer"></div>
+            <p><strong>Overview:</strong> Centrifuge</p>
+            <ul>
+              <li>Designed full mechanical system in SolidWorks and performed motion checks + stress analysis</li>
+              <li>Tube laser cut arm after reaching out to many local vendors and considering in house options</li>
+              <li>CNC machined coupler</li>
+              <li>Built assembly and validated performance</li>
+            </ul>
           </div>
         </article>
         <!-- Autonomous Drifter Buoy -->
         <article class="card project">
           <img class="thumb" src="images/project4.jpg" alt="Project 4 thumbnail" />
           <div class="meta">2023 · Analysis</div>
-          <h3>Project Four Title</h3>
-          <p>One‑sentence description highlighting analysis, constraints, and result.</p>
+          <h3>Autonomous Drifter Buoy</h3>
+          <p>Designed and built autonomous surface wave drifter buoy for characterizing power spectral density and frequency components of near shore waves off of Scripps pier in the surf zone.</p>
           <div class="tags">
             <span class="tag">CFD</span><span class="tag">Heat Transfer</span><span class="tag">Python</span>
           </div>
           <div class="row right">
-            <a class="btn secondary" href="#">More details</a>
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
+              More details
+            </button>
+          </div>
+
+          <div class="details" aria-hidden="true">
+            <div class="spacer"></div>
+            <p><strong>Overview:</strong> Autonomous Buoy</p>
+            <ul>
+              <li>Integrated gps and 9-axis imu data streams with arduino</li>
+              <li>Recorded quaternions for orientation, performed earth frame correction and windowing to prepare data for analysis</li>
+              <li>Performed PSD and FFT analysis and compiled technical report (linked below)</li>
+            </ul>
           </div>
         </article>
       </div>
