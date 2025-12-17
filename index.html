@@ -324,6 +324,11 @@
     });
   
     document.addEventListener('click', () => closeProject(openProject));
+     
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeProject(openProject);
+    });
+    
   })();
   </script>
 
