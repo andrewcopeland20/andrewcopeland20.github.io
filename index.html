@@ -54,25 +54,26 @@
       display: flex;
       flex-direction: column;
       height: 100%;
+      min-height: 470px;
     }
     .card.project .row.right{
       margin-top: auto;     /* pushes button to bottom */
       padding-top: 4px;
     }
-    .card.project{
-    min-height: 470px;
-    }
-    .project { position: relative; overflow: hidden; }
+    .project { position: relative; }
     .project .details {
       max-height: 0;
       opacity: 0;
       transform: translateY(-6px);
       transition: max-height 280ms ease, opacity 220ms ease, transform 220ms ease;
+      overflow: hidden;
+      pointer-events: none;
     }
     .project.is-open .details {
       max-height: 600px;
       opacity: 1;
       transform: translateY(0);
+      pointer-events: auto;
     }
     .tags{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0}
     .tag{font-size:11px; border:1px solid var(--border); padding:4px 8px; border-radius:999px; color:var(--muted)}
@@ -153,7 +154,7 @@
             <button class="btn secondary details-toggle" type="button" aria-expanded="false">
               More details
             </button>
-        </div>
+          </div>
         </article>
         <!-- Pessary -->
         <article class="card project">
@@ -177,7 +178,7 @@
             <button class="btn secondary details-toggle" type="button" aria-expanded="false">
               More details
             </button>
-        </div>
+          </div>
         </article>
         <!-- Centrifuge -->
         <article class="card project">
@@ -202,7 +203,7 @@
             <button class="btn secondary details-toggle" type="button" aria-expanded="false">
               More details
             </button>
-        </div>
+          </div>
         </article>
         <!-- Autonomous Drifter Buoy -->
         <article class="card project">
