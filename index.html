@@ -6,6 +6,7 @@
   <title>Andrew Copeland · Engineering Portfolio</title>
   <meta name="description" content="Mechanical engineering portfolio: product design, R&D, biomedical, controls, and manufacturing projects." />
   <meta name="color-scheme" content="light dark" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     :root{
       --bg: #0b0c0f;          /* dark background (auto-switched) */
@@ -152,6 +153,14 @@
           <div class="details" aria-hidden="true">
             <div class="spacer"></div>
             <p><strong>Overview:</strong> Two-axis random positioning machine for simulated microgravity research.</p>
+            <model-viewer
+              src="models/rpm_full_assembly_v01.glb"
+              alt="RPM 3D model"
+              camera-controls
+              touch-action="pan-y"
+              shadow-intensity="1"
+              style="width:100%; height:360px; background: var(--panel); border:1px solid var(--border); border-radius:12px;">
+            </model-viewer>
             <ul>
               <li>Designed full mechanical system in SolidWorks</li>
               <li>Integrated motor control and motion profiles</li>
