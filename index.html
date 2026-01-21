@@ -33,6 +33,14 @@
     .nav{display:flex; gap:16px; align-items:center; justify-content:space-between; position:sticky; top:0; backdrop-filter:saturate(140%) blur(6px); background:color-mix(in hsl, var(--bg) 70%, transparent); border-bottom:1px solid var(--border); z-index:5}
     .nav a.logo{font-weight:700; letter-spacing:.2px; color:var(--text);}
     .nav .links{display:flex; align-items: center; gap:16px; flex-wrap:wrap}
+    .nav .links a,
+    .nav .links button {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+    }
+    button { font: inherit; }
     .btn{display:inline-flex; align-items:center; gap:8px; background:var(--brand); color:#fff; border-radius:12px; padding:10px 14px; border:0; cursor:pointer}
     .btn.secondary{background:transparent; color:var(--text); border:1px solid var(--border)}
     .btn:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
