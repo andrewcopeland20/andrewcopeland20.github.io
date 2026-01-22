@@ -95,6 +95,29 @@
 .tags{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0}
     .tag{font-size:11px; border:1px solid var(--border); padding:4px 8px; border-radius:999px; color:var(--muted)}
     .meta{font-size:12px; color:var(--muted)}
+    .more-project{
+      padding-top: 10px;
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .more-project:first-child{
+      border-top: 0;
+      padding-top: 0;
+      margin-top: 0;
+    }
+    .more-project h4{
+      margin: 0 0 4px;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .more-project p{
+      margin: 0 0 6px;
+    }
+    .more-project .meta{
+      margin: 0;
+      font-size: 0.95em;
+      opacity: 0.85;
+    }
     .footer{margin:40px 0 16px; font-size:13px; color:var(--muted); display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between}
     .list{display:grid; gap:10px}
     .row{display:flex; gap:12px; align-items:center}
@@ -257,14 +280,65 @@
 
       <div class="card">
         <details>
-          <summary><strong>More projects</strong> (toggle)</summary>
-          <ul>
-            <li>Large‑diameter custom centrifuge (swing‑bucket) — rebuild & test.</li>
-            <li>kukaYoubot simulation.</li>
-            <li>PID temperature bath; CFD library for supersonic flat‑plate; youBOT control in CoppeliaSim.</li>
-            <li>Implemented a MATLAB shaft analysis tool to rapidly assess design safety by computing shear/moment diagrams and identifying the critical section and minimum factor of safety across parametric geometries and load cases.</li>
-          </ul>
+          <summary><strong>More projects</strong>(toggle)</summary>
+
+          <div class="more-project">
+            <h4>WavepHOx Rebuild, Calibration &amp; Coastal Deployment</h4>
+            <p>
+              Rebuilt and field-deployed a WavepHOx ocean chemistry package for coastal monitoring, calibrating pH, salinity, and temperature sensors via multi-day tank tests.
+              Derived and applied calibration coefficients and validated improvements using geospatial QA/QC comparisons of calibrated vs uncalibrated data.
+            </p>
+            <p class="meta"><strong>Skills:</strong> sensor calibration, field deployment, ocean instrumentation, data validation</p>
+          </div>
+
+          <div class="more-project">
+            <h4>Mobile Manipulator Control &amp; Simulation (KUKA youBot, CoppeliaSim)</h4>
+            <p>
+              Implemented task-space trajectory generation and PI feedback control for a mobile manipulator performing pick-and-place tasks in simulation.
+              Wrote modular MATLAB code for screw-based kinematics, odometry propagation, and manipulability analysis, and evaluated stability and error dynamics under varied controller tuning.
+            </p>
+            <p class="meta"><strong>Skills:</strong> robotics kinematics, controls, numerical integration, simulation, MATLAB</p>
+          </div>
+
+          <div class="more-project">
+            <h4>PID-Controlled Temperature Bath for Sensor Calibration</h4>
+            <p>
+              Designed and operated a closed-loop, PID-controlled thermal bath to calibrate a Sea-Bird SBE37 CTD against a precision RTD reference.
+              Tuned control gains to achieve ±0.01&nbsp;°C stability and analyzed settling behavior and calibration accuracy over extended runs.
+            </p>
+            <p class="meta"><strong>Skills:</strong> PID control, thermal systems, instrumentation, experimental validation</p>
+          </div>
+
+          <div class="more-project">
+            <h4>Compressible CFD: Supersonic Flat-Plate Solver (MATLAB)</h4>
+            <p>
+              Developed a 2-D finite-difference CFD solver (MacCormack scheme) for compressible Navier–Stokes flow over a flat plate at Mach ~4.
+              Included viscous stresses and heat conduction, capturing expected shock and boundary-layer behavior while prioritizing algorithmic transparency over black-box solvers.
+            </p>
+            <p class="meta"><strong>Skills:</strong> CFD fundamentals, numerical methods, compressible flow, MATLAB</p>
+          </div>
+
+          <div class="more-project">
+            <h4>Vortex-Cooled Rocket Engine Cold-Flow CFD Study</h4>
+            <p>
+              Conducted a cold-flow CFD study of a vortex-cooled rocket engine using ANSYS Fluent to assess mixing behavior and wall thermal protection.
+              Evaluated turbulence, velocity fields, and wall temperatures across oxidizer-to-fuel mass-flow ratios to identify design tradeoffs.
+            </p>
+            <p class="meta"><strong>Skills:</strong> CFD setup, turbulence modeling, mesh convergence, thermal analysis</p>
+          </div>
+
+          <div class="more-project">
+            <h4>Parametric Shaft Design &amp; Failure Analysis Tool (MATLAB)</h4>
+            <p>
+              Built a reusable MATLAB tool to evaluate shaft designs across parametric geometries and load cases by automatically computing shear/moment diagrams.
+              Identified critical sections and minimum factor of safety to enable rapid early-stage design iteration without one-off calculations.
+            </p>
+            <p class="meta"><strong>Skills:</strong> machine design, structural analysis, automation, MATLAB</p>
+          </div>
+
         </details>
+      </div>
+
       </div>
     </section>
 
