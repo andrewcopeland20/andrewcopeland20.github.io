@@ -58,8 +58,11 @@
     }
     .grid.projects{
     grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
-    align-items: stretch;
+    align-items: start;
     gap: 16px;
+    }
+    .card.project{
+      align-self: start;    /* ensures each card sizes to its own content */
     }
     .project h3{margin:6px 0 4px; font-size:18px}
     .project .thumb{width:100%; height:160px; object-fit:cover; border-radius:12px; border:1px solid var(--border); background:var(--panel);}
@@ -86,12 +89,14 @@
       pointer-events: none;
     }
     .project.is-open .details {
-      max-height: 600px;
+      max-height: 1200px;
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
     }
         .details ul{ margin: 8px 0 0; padding-left: 18px; }
+        .details ul li{ margin: 10px 0; }              /* adds spacing between P/A/R */
+        .details ul li strong{ color: var(--text); }   /* optional: makes labels pop a bit */
 .tags{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0}
     .tag{font-size:11px; border:1px solid var(--border); padding:4px 8px; border-radius:999px; color:var(--muted)}
     .meta{font-size:12px; color:var(--muted)}
