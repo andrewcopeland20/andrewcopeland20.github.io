@@ -61,30 +61,32 @@
     align-items: start;
     gap: 16px;
     }
-
-    /* --- Expanded project (desktop-only) --- */
+   /* --- Expanded project (desktop-only) --- */
     @media (min-width: 880px){
-      /* When any project is open, fade the others */
-      .grid.projects.has-open article.project:not(.is-open){
-        opacity: 0.25;
-        filter: blur(0.2px);
+      /* Make sure the expanded card is unmistakably full-width */
+      .grid.projects.has-open{
+        grid-auto-flow: row;
+      }
+      /* Fade + disable ALL other cards */
+      .grid.projects.has-open > article.card.project:not(.is-open){
+        opacity: 0.18;
+        filter: saturate(0.7) blur(0.4px);
         pointer-events: none;
-        transform: scale(0.995);
+        transform: scale(0.99);
         transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
       }
-    
-      /* Expand the open one to span the whole grid width */
-      .grid.projects.has-open article.project.is-open{
+      /* Expand the open one to span the full grid width */
+      .grid.projects.has-open > article.card.project.is-open{
         grid-column: 1 / -1;
+        width: 100%;
         z-index: 3;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       }
-    
-      /* Optional: make the expanded layout feel intentional */
-      .grid.projects.has-open article.project.is-open .thumb{
+      /* Make the expanded layout feel intentional */
+      .grid.projects.has-open > article.card.project.is-open .thumb{
         height: 240px;
       }
     }
-
     .card.project{
       align-self: start;    /* ensures each card sizes to its own content */
     }
@@ -502,6 +504,7 @@
       if (!btn) return;
   
       btn.addEventListener('click', e => {
+        e.preventDefault();
         e.stopPropagation();
         card.classList.contains('is-open')
           ? closeProject(card)
