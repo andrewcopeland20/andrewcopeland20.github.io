@@ -61,32 +61,6 @@
     align-items: start;
     gap: 16px;
     }
-   /* --- Expanded project (desktop-only) --- */
-    @media (min-width: 880px){
-      /* Make sure the expanded card is unmistakably full-width */
-      .grid.projects.has-open{
-        grid-auto-flow: row;
-      }
-      /* Fade + disable ALL other cards */
-      .grid.projects.has-open > article.card.project:not(.is-open){
-        opacity: 0.18;
-        filter: saturate(0.7) blur(0.4px);
-        pointer-events: none;
-        transform: scale(0.99);
-        transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
-      }
-      /* Expand the open one to span the full grid width */
-      .grid.projects.has-open > article.card.project.is-open{
-        grid-column: 1 / -1;
-        width: 100%;
-        z-index: 3;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      }
-      /* Make the expanded layout feel intentional */
-      .grid.projects.has-open > article.card.project.is-open .thumb{
-        height: 240px;
-      }
-    }
     .card.project{
       align-self: start;    /* ensures each card sizes to its own content */
     }
