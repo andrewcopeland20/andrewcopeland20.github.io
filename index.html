@@ -61,6 +61,30 @@
     align-items: start;
     gap: 16px;
     }
+
+    /* --- Expanded project (desktop-only) --- */
+    @media (min-width: 880px){
+      /* When any project is open, fade the others */
+      .grid.projects.has-open article.project:not(.is-open){
+        opacity: 0.25;
+        filter: blur(0.2px);
+        pointer-events: none;
+        transform: scale(0.995);
+        transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
+      }
+    
+      /* Expand the open one to span the whole grid width */
+      .grid.projects.has-open article.project.is-open{
+        grid-column: 1 / -1;
+        z-index: 3;
+      }
+    
+      /* Optional: make the expanded layout feel intentional */
+      .grid.projects.has-open article.project.is-open .thumb{
+        height: 240px;
+      }
+    }
+
     .card.project{
       align-self: start;    /* ensures each card sizes to its own content */
     }
@@ -412,7 +436,7 @@
 
     <footer class="footer">
       <span>© <span id="y"></span> Andrew Copeland</span>
-      <span class="meta">Built with a single HTML file. Hosted on GitHub Pages. v1.90 </span>
+      <span class="meta">Built with a single HTML file. Hosted on GitHub Pages. v1.91 </span>
     </footer>
   </main>
 
