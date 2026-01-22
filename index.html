@@ -432,9 +432,15 @@
   </script>
   <script>
   (function () {
+    const projectsGrid = document.querySelector('.grid.projects');
     const projects = Array.from(document.querySelectorAll('article.project'));
     let openProject = null;
-  
+    
+    function setGridOpenState(isOpen){
+      if (!projectsGrid) return;
+      projectsGrid.classList.toggle('has-open', isOpen);
+    }
+
     function closeProject(card) {
       if (!card) return;
       card.classList.remove('is-open');
@@ -446,6 +452,7 @@
       }
       if (details) details.setAttribute('aria-hidden', 'true');
       openProject = null;
+      setGridOpenState(false);
     }
   
     function openProjectCard(card) {
@@ -459,6 +466,8 @@
       }
       if (details) details.setAttribute('aria-hidden', 'false');
       openProject = card;
+      setGridOpenState(true);
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   
     projects.forEach(card => {
