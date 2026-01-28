@@ -101,6 +101,40 @@
       position: relative;
       z-index: 2;
     }
+     /* --- Project tile hover + focus affordance --- */
+    .card.project{
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      transform-origin: center;
+      will-change: transform;
+    }
+    @media (hover: hover) and (pointer: fine){
+      .card.project:hover{
+        transform: translateY(-2px) scale(1.015);
+        box-shadow: 0 14px 34px rgba(0,0,0,.35);
+        border-color: rgba(124,156,255,.35);
+      }
+      /* Don't "bounce" an already-open tile */
+      .card.project.is-open:hover{
+        transform: none;
+      }
+    }
+    /* Keyboard users: highlight when tabbing onto the tile's button/link */
+    .card.project:focus-within{
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 14px 34px rgba(0,0,0,.35);
+      border-color: rgba(124,156,255,.45);
+    }
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .card.project{
+        transition: none;
+      }
+      .card.project:hover,
+      .card.project:focus-within{
+        transform: none;
+      }
+    }
+    /* --- END Hover Addition --- */
     .project { position: relative; }
     .project .details {
       max-height: 0;
