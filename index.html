@@ -109,9 +109,9 @@
     }
     @media (hover: hover) and (pointer: fine){
       .card.project:hover{
-        transform: translateY(-2px) scale(1.015);
-        box-shadow: 0 14px 34px rgba(0,0,0,.35);
-        border-color: rgba(124,156,255,.35);
+        transform: translateY(-1px) scale(1.01);
+        box-shadow: 0 10px 24px rgba(0,0,0,.24);
+        border-color: rgba(124,156,255,.30);
       }
       /* Don't "bounce" an already-open tile */
       .card.project.is-open:hover{
@@ -120,9 +120,9 @@
     }
     /* Keyboard users: highlight when tabbing onto the tile's button/link */
     .card.project:focus-within{
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 14px 34px rgba(0,0,0,.35);
-      border-color: rgba(124,156,255,.45);
+      transform: translateY(-1px) scale(1.008);
+      box-shadow: 0 10px 24px rgba(0,0,0,.26);
+      border-color: rgba(124,156,255,.40);
     }
     /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce){
