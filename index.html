@@ -83,6 +83,20 @@
   .hero .row > .btn:hover{ transform: none; }
 }
 
+#contact .row > .btn{
+  transition: transform 160ms ease;
+  transform: translateZ(0);
+}
+@media (hover: hover) and (pointer: fine){
+  #contact .row > .btn:hover{
+    transform: scale(1.03);
+    box-shadow: none;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  #contact .row > .btn{ transition: none; transform: none; }
+  #contact .row > .btn:hover{ transform: none; }
+}
 
     .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:start; padding:32px 0}
     .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px}
