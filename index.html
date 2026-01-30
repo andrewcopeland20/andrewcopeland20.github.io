@@ -7,6 +7,11 @@
   <meta name="description" content="Mechanical engineering portfolio: product design, R&D, biomedical, controls, and manufacturing projects." />
   <meta name="color-scheme" content="light dark" />
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <!-- Preload GLBs so they're already in cache by the time user clicks "Learn more" -->
+  <link rel="preload" as="fetch" href="models/rpm_full_assembly_v03.glb" type="model/gltf-binary" crossorigin>
+  <link rel="preload" as="fetch" href="models/centrifuge_full_assembly_v02.glb" type="model/gltf-binary" crossorigin>
+  
   <style>
     :root{
       --bg: #0b0c0f;          /* dark background (auto-switched) */
@@ -376,6 +381,7 @@ details.more-projects[open] > summary .hint{
             <model-viewer
               src="models/rpm_full_assembly_v03.glb"
               alt="RPM 3D model"
+              loading="eager"
               camera-controls
               touch-action="pan-y"
               exposure="0.72"
@@ -434,6 +440,7 @@ details.more-projects[open] > summary .hint{
              <model-viewer
               src="models/centrifuge_full_assembly_v02.glb"
               alt="LDC 3D model"
+              loading="eager"
               camera-controls
               touch-action="pan-y"
               exposure="0.72"
