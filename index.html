@@ -173,8 +173,8 @@
     }
     /* Keyboard users: highlight when tabbing onto the tile's button/link */
     .card.project:focus-within{
-      transform: translateY(-1px) scale(1.008);
-      box-shadow: 0 10px 24px rgba(0,0,0,.26);
+      transform: none; /*translateY(-1px) scale(1.008);*/
+      box-shadow: none; /*0 10px 24px rgba(0,0,0,.26);*/
       border-color: rgba(124,156,255,.40);
     }
     /* Respect reduced motion */
@@ -246,10 +246,20 @@
   }
 }
 .more-projects-card:focus-within{
-  transform: none; /*translateY(-1px) scale(1.008);*/
-  box-shadow: none; /*0 10px 24px rgba(0,0,0,.26);*/
+  transform: translateY(-1px) scale(1.008);
+  box-shadow: 0 10px 24px rgba(0,0,0,.26);
   border-color: rgba(124,156,255,.40);
 }
+
+/* NEW: when it's focused (after click) AND hovered, let hover win */
+@media (hover: hover) and (pointer: fine){
+  .more-projects-card:focus-within:hover{
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 10px 24px rgba(0,0,0,.24);
+    border-color: rgba(124,156,255,.30);
+  }
+}    
+    
 @media (prefers-reduced-motion: reduce){
   .more-projects-card{ transition: none; }
   .more-projects-card:hover,
