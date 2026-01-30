@@ -193,12 +193,15 @@
       max-height: 0;
       opacity: 0;
       transform: translateY(-6px);
-      transition: max-height 280ms ease, opacity 220ms ease, transform 220ms ease;
+      transition: max-height 580ms cubic-bezier(.2,.8,.2,1),
+                  opacity 360ms ease,
+                  transform 360ms ease;
       overflow: hidden;
       pointer-events: none;
+      will-change: max-height, opacity, transform;
     }
     .project.is-open .details {
-      max-height: 1200px;
+      max-height: 1400px;
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
@@ -663,21 +666,23 @@ details.more-projects[open] > summary .hint{
       requestAnimationFrame(step);
     }
 
-    function scrollCardToCenter(card) {
+    function scrollCardBelowNav(card) {
       const nav = document.querySelector('.nav');
-      const navH = nav ? nav.getBoundingClientRect().height : 0;
+      const navRect = nav ? nav.getBoundingClientRect() : null;
+      const navBottom = navRect ? navRect.bottom : 0;
 
       const rect = card.getBoundingClientRect();
-      // center the card in the visible area below the sticky nav
-      const visibleH = window.innerHeight - navH;
-      const targetY =
-        window.scrollY + rect.top + rect.height / 2 - navH - visibleH / 2;
+      const pad = 12; // gap between nav and tile
 
-      smoothScrollToY(Math.max(0, targetY), 900); // <-- tweak duration here (bigger = slower)
+      // Scroll so the card's TOP sits just below the nav's current bottom edge
+      const targetY = window.scrollY + rect.top - navBottom - pad;
+
+      smoothScrollToY(Math.max(0, targetY), 900); // <-- increase for slower
     }
 
     function closeProject(card, { preserveScroll = true } = {}) {
       if (!card) return;
+
 
       // Prevent "scrolling on collapse" by compensating for layout shift
       const beforeTop = preserveScroll ? card.getBoundingClientRect().top : 0;
@@ -716,13 +721,14 @@ details.more-projects[open] > summary .hint{
       openProject = card;
       setGridOpenState(true);
 
-      // Center the expanded card (instead of aligning its top)
-      scrollCardToCenter(card);
+      // Align tile top under the (possibly changing) header/nav
+      scrollCardBelowNav(card);
     }
   
     projects.forEach(card => {
       const btn = card.querySelector('.details-toggle');
       if (!btn) return;
+
   
       btn.addEventListener('click', e => {
         e.preventDefault();
