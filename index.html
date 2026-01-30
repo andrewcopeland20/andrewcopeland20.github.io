@@ -254,13 +254,14 @@
   }
 }
 .more-projects-card:focus-within{
-  transform: translateY(-1px) scale(1.008);
-  box-shadow: 0 10px 24px rgba(0,0,0,.26);
+  transform: none; /*translateY(-1px) scale(1.008);*/
+  box-shadow: none; /*0 10px 24px rgba(0,0,0,.26);*/
   border-color: rgba(124,156,255,.40);
 }
 
 /* NEW: when it's focused (after click) AND hovered, let hover win */
 @media (hover: hover) and (pointer: fine){
+  .more-projects-card:hover,
   .more-projects-card:focus-within:hover{
     transform: translateY(-1px) scale(1.01);
     box-shadow: 0 10px 24px rgba(0,0,0,.24);
@@ -736,7 +737,6 @@ details.more-projects[open] > summary .hint{
       const btn = card.querySelector('.details-toggle');
       if (!btn) return;
 
-  
       btn.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
@@ -744,10 +744,23 @@ details.more-projects[open] > summary .hint{
           ? closeProject(card)
           : openProjectCard(card);
       });
-  
+      
       card.addEventListener('click', e => e.stopPropagation());
     });
-  
+
+    /* --- More Projects scroll behavior --- */
+    const moreProjectsCard = document.querySelector('.more-projects-card');
+    const moreProjectsDetails = moreProjectsCard?.querySelector('details.more-projects');
+
+    if (moreProjectsDetails && moreProjectsCard) {
+      moreProjectsDetails.addEventListener('toggle', () => {
+        if (moreProjectsDetails.open) {
+          // match project tile behavior
+          scrollCardBelowNav(moreProjectsCard);
+        }
+      });
+    }
+    
     document.addEventListener('click', () => closeProject(openProject));
      
     document.addEventListener('keydown', (e) => {
