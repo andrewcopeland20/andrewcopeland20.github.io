@@ -629,8 +629,49 @@ details.more-projects[open] > summary .hint{
       projectsGrid.classList.toggle('has-open', isOpen);
     }
 
-    function closeProject(card) {
+    /* -------- NEW ADDITION FOR PROJECT CARD SCROLLING STUFF --------*/
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // controllable smooth scroll (slower than scrollIntoView, and we can choose where to land)
+    function smoothScrollToY(targetY, durationMs = 850) {
+      if (prefersReducedMotion) {
+        window.scrollTo(0, targetY);
+        return;
+      }
+      const startY = window.scrollY;
+      const delta = targetY - startY;
+      const startT = performance.now();
+
+      const easeInOutCubic = (t) =>
+        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      function step(now) {
+        const t = Math.min(1, (now - startT) / durationMs);
+        window.scrollTo(0, startY + delta * easeInOutCubic(t));
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function scrollCardToCenter(card) {
+      const nav = document.querySelector('.nav');
+      const navH = nav ? nav.getBoundingClientRect().height : 0;
+
+      const rect = card.getBoundingClientRect();
+      // center the card in the visible area below the sticky nav
+      const visibleH = window.innerHeight - navH;
+      const targetY =
+        window.scrollY + rect.top + rect.height / 2 - navH - visibleH / 2;
+
+      smoothScrollToY(Math.max(0, targetY), 900); // <-- tweak duration here (bigger = slower)
+    }
+
+    function closeProject(card, { preserveScroll = true } = {}) {
       if (!card) return;
+
+      // Prevent "scrolling on collapse" by compensating for layout shift
+      const beforeTop = preserveScroll ? card.getBoundingClientRect().top : 0;
+
       card.classList.remove('is-open');
       const btn = card.querySelector('.details-toggle');
       const details = card.querySelector('.details');
@@ -639,12 +680,20 @@ details.more-projects[open] > summary .hint{
         btn.setAttribute('aria-expanded', 'false');
       }
       if (details) details.setAttribute('aria-hidden', 'true');
+
+      if (preserveScroll) {
+        const afterTop = card.getBoundingClientRect().top;
+        const delta = afterTop - beforeTop;
+        if (delta) window.scrollBy(0, delta);
+      }
+
       openProject = null;
       setGridOpenState(false);
     }
-  
+
     function openProjectCard(card) {
-      if (openProject && openProject !== card) closeProject(openProject);
+      if (openProject && openProject !== card) closeProject(openProject, { preserveScroll: true });
+
       card.classList.add('is-open');
       const btn = card.querySelector('.details-toggle');
       const details = card.querySelector('.details');
@@ -653,9 +702,12 @@ details.more-projects[open] > summary .hint{
         btn.setAttribute('aria-expanded', 'true');
       }
       if (details) details.setAttribute('aria-hidden', 'false');
+
       openProject = card;
       setGridOpenState(true);
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Center the expanded card (instead of aligning its top)
+      scrollCardToCenter(card);
     }
   
     projects.forEach(card => {
