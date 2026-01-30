@@ -652,6 +652,9 @@ details.more-projects[open] > summary .hint{
 
     /* -------- NEW ADDITION FOR PROJECT CARD SCROLLING STUFF --------*/
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobileLike =
+      (window.matchMedia && window.matchMedia('(max-width: 880px)').matches) ||
+      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 
     // controllable smooth scroll (slower than scrollIntoView, and we can choose where to land)
     function smoothScrollToY(targetY, durationMs = 850) {
@@ -730,7 +733,9 @@ details.more-projects[open] > summary .hint{
       setGridOpenState(true);
 
       // Align tile top under the (possibly changing) header/nav
+      if (!isMobileLike) {
       scrollCardBelowNav(card);
+      }
     }
   
     projects.forEach(card => {
@@ -756,7 +761,9 @@ details.more-projects[open] > summary .hint{
       moreProjectsDetails.addEventListener('toggle', () => {
         if (moreProjectsDetails.open) {
           // match project tile behavior
+          if (!isMobileLike) {
           scrollCardBelowNav(moreProjectsCard);
+          }
         }
       });
     }
