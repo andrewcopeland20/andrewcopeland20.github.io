@@ -6,344 +6,667 @@
   <title>Andrew Copeland · Engineering Portfolio</title>
   <meta name="description" content="Mechanical engineering portfolio: product design, R&D, biomedical, controls, and manufacturing projects." />
   <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-  <!-- Preload GLBs so they're already in cache by the time user clicks "Learn more" -->
-  <link rel="preload" as="fetch" href="models/rpm_full_assembly_v03.glb" type="model/gltf-binary" crossorigin>
-  <link rel="preload" as="fetch" href="models/centrifuge_full_assembly_v02.glb" type="model/gltf-binary" crossorigin>
-  
+  <link rel="preload" as="fetch" href="models/rpm_full_assembly_v03.glb" type="model/gltf-binary" crossorigin />
+  <link rel="preload" as="fetch" href="models/centrifuge_full_assembly_v02.glb" type="model/gltf-binary" crossorigin />
+
   <style>
     :root{
-      --bg: #0b0c0f;          /* dark background (auto-switched) */
-      --panel:#12141a;
-      --text:#e8eaf2;
-      --muted:#a9afc3;
-      --brand:#7c9cff;        /* accent */
-      --ok:#00c389;
-      --ring:rgba(124,156,255,.45);
-      --card:#0f1117;
-      --border:#1b1f2a;
+      color-scheme: dark;
+      --bg:#08111f;
+      --bg-elevated:#0d1728;
+      --panel:rgba(16, 24, 39, 0.84);
+      --card:rgba(10, 18, 30, 0.92);
+      --surface:#13213a;
+      --text:#eff4ff;
+      --muted:#b2bfd6;
+      --brand:#4f8cff;
+      --brand-strong:#2c6cf4;
+      --brand-soft:rgba(79, 140, 255, 0.14);
+      --ring:rgba(79, 140, 255, 0.34);
+      --border:rgba(164, 183, 216, 0.18);
+      --shadow-card:0 18px 48px rgba(0, 0, 0, 0.24);
+      --shadow-button:0 10px 30px rgba(79, 140, 255, 0.22);
+      --container:1120px;
+      --radius-card:20px;
+      --radius-button:14px;
     }
+
     @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f8fb; --panel:#ffffff; --text:#0b1021; --muted:#56607a; --brand:#355cff; --ring:rgba(53,92,255,.25);
-        --card:#ffffff; --border:#e6e9f2;
+      :root:not([data-theme="dark"]){
+        color-scheme: light;
+        --bg:#f4f7fb;
+        --bg-elevated:#eef3fb;
+        --panel:rgba(255, 255, 255, 0.92);
+        --card:rgba(255, 255, 255, 0.96);
+        --surface:#eff4ff;
+        --text:#0d1728;
+        --muted:#57657f;
+        --brand:#2f6df6;
+        --brand-strong:#1d57d2;
+        --brand-soft:rgba(47, 109, 246, 0.10);
+        --ring:rgba(47, 109, 246, 0.28);
+        --border:rgba(13, 23, 40, 0.10);
+        --shadow-card:0 18px 48px rgba(15, 23, 42, 0.08);
+        --shadow-button:0 10px 30px rgba(47, 109, 246, 0.18);
       }
     }
+
+    :root[data-theme="light"]{
+      color-scheme: light;
+      --bg:#eff4fb;
+      --bg-elevated:#e7eef9;
+      --panel:rgba(255, 255, 255, 0.91);
+      --card:rgba(255, 255, 255, 0.955);
+      --surface:#ebf1fc;
+      --text:#0d1728;
+      --muted:#55637e;
+      --brand:#2f6df6;
+      --brand-strong:#1d57d2;
+      --brand-soft:rgba(47, 109, 246, 0.11);
+      --ring:rgba(47, 109, 246, 0.28);
+      --border:rgba(13, 23, 40, 0.105);
+      --shadow-card:0 18px 48px rgba(15, 23, 42, 0.09);
+      --shadow-button:0 10px 30px rgba(47, 109, 246, 0.18);
+    }
+
+    :root[data-theme="dark"]{
+      color-scheme: dark;
+      --bg:#08111f;
+      --bg-elevated:#0d1728;
+      --panel:rgba(16, 24, 39, 0.84);
+      --card:rgba(10, 18, 30, 0.92);
+      --surface:#13213a;
+      --text:#eff4ff;
+      --muted:#b2bfd6;
+      --brand:#4f8cff;
+      --brand-strong:#2c6cf4;
+      --brand-soft:rgba(79, 140, 255, 0.14);
+      --ring:rgba(79, 140, 255, 0.34);
+      --border:rgba(164, 183, 216, 0.18);
+      --shadow-card:0 18px 48px rgba(0, 0, 0, 0.24);
+      --shadow-button:0 10px 30px rgba(79, 140, 255, 0.22);
+    }
+
     html,body{height:100%}
-    body{margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background:var(--bg); color:var(--text);}
-    a{color:var(--brand); text-decoration:none}
+    html:focus-within{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size:17px;
+      line-height:1.65;
+      letter-spacing:-0.01em;
+      color:var(--text);
+      background-color:var(--bg);
+      background:
+        radial-gradient(1200px 720px at 8% -8%, color-mix(in hsl, var(--brand) 18%, transparent) 0%, transparent 58%),
+        radial-gradient(900px 560px at 100% 6%, color-mix(in hsl, var(--brand) 11%, transparent) 0%, transparent 54%),
+        radial-gradient(1100px 680px at 50% 100%, color-mix(in hsl, var(--brand) 8%, transparent) 0%, transparent 62%);
+      background-repeat:no-repeat;
+    }
+    img{display:block; max-width:100%}
+    model-viewer{display:block}
+    a{color:var(--brand-strong); text-decoration:none; text-underline-offset:0.18em}
     a:hover{text-decoration:underline}
-    .container{max-width:1000px; margin:0 auto; padding:24px}
-    .nav{display:flex; gap:16px; align-items:center; justify-content:space-between; position:sticky; top:0; backdrop-filter:saturate(140%) blur(6px); background:color-mix(in hsl, var(--bg) 70%, transparent); border-bottom:1px solid var(--border); z-index:5}
-    .nav-shell{display:flex; align-items:center; gap:16px; justify-content:space-between; flex-wrap:wrap}
-    .nav a.logo{font-weight:700; letter-spacing:.2px; color:var(--text);}
-    .nav .links{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end}
-    .nav .links a,
-    .nav .links button {
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-      line-height: inherit;
+    strong{color:var(--text)}
+    button{font:inherit}
+    section[id]{scroll-margin-top:112px}
+    .container{max-width:var(--container); margin:0 auto; padding:24px}
+    main.container{padding-top:40px; padding-bottom:32px}
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:saturate(150%) blur(14px);
+      background:color-mix(in hsl, var(--bg) 72%, transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-shell{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      padding-block:18px;
+    }
+    .nav a.logo{
+      font-family:"Space Grotesk", "Manrope", sans-serif;
+      font-size:1.05rem;
+      font-weight:700;
+      letter-spacing:-0.03em;
+      color:var(--text);
+    }
+    .nav .links{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
     .nav .links .btn{
-      min-height: 42px;
-      padding: 9px 14px;
-      justify-content: center;
+      min-height:44px;
+      padding:10px 14px;
     }
-    .nav .links .btn.secondary{
-      background: var(--panel);
-    }
-    button { font: inherit; }
-    .btn{display:inline-flex; align-items:center; gap:8px; background:var(--brand); color:#fff; border-radius:12px; padding:10px 14px; border:0; cursor:pointer}
-    .btn.secondary{background:transparent; color:var(--text); border:1px solid var(--border)}
-    .btn:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
 
-    /* Button hover inversion (outline/secondary buttons) */
-    .btn{transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;}
-    a.btn:hover{ text-decoration: none; }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
+      padding:12px 18px;
+      border-radius:var(--radius-button);
+      border:1px solid transparent;
+      background:linear-gradient(180deg, var(--brand), var(--brand-strong));
+      color:#fff;
+      font-size:0.95rem;
+      font-weight:700;
+      letter-spacing:-0.01em;
+      cursor:pointer;
+      box-shadow:var(--shadow-button);
+      transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+    }
+    .btn.secondary{
+      background:var(--panel);
+      color:var(--text);
+      border-color:var(--border);
+      box-shadow:none;
+    }
+    .btn:focus-visible{outline:3px solid var(--ring); outline-offset:2px}
+    a.btn:hover{text-decoration:none}
 
     @media (hover: hover) and (pointer: fine){
+      .btn:hover{
+        transform:translateY(-1px);
+      }
       .btn.secondary:hover{
-        background: var(--text);
-        border-color: var(--text);
-        color: var(--bg);
+        background:var(--brand-soft);
+        border-color:color-mix(in hsl, var(--brand) 42%, var(--border));
+        color:var(--text);
       }
     }
-    .btn.secondary:focus-visible{
-      background: var(--text);
-      border-color: var(--text);
-      color: var(--bg);
+
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(0, 1.45fr) minmax(290px, 0.85fr);
+      gap:24px;
+      align-items:stretch;
+      padding:12px 0 8px;
+    }
+    .card{
+      background:linear-gradient(180deg, color-mix(in hsl, var(--card) 94%, transparent), color-mix(in hsl, var(--bg-elevated) 82%, var(--card)));
+      border:1px solid var(--border);
+      border-radius:var(--radius-card);
+      padding:28px;
+      box-shadow:var(--shadow-card);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      width:max-content;
+      max-width:100%;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+    h1,h2,h3,h4{
+      margin:0;
+      font-family:"Space Grotesk", "Manrope", sans-serif;
+      letter-spacing:-0.03em;
+      color:var(--text);
+    }
+    h1{
+      font-size:clamp(2.75rem, 5vw, 4.5rem);
+      line-height:1.02;
+      margin-top:18px;
+      max-width:12ch;
+    }
+    h2{
+      font-size:clamp(1.85rem, 3vw, 2.55rem);
+      line-height:1.08;
+    }
+    h3{
+      font-size:1.28rem;
+      line-height:1.2;
+    }
+    h4{
+      font-size:1.05rem;
+      line-height:1.25;
+    }
+    p{margin:0; color:var(--muted)}
+    ul{margin:0; padding-left:20px}
+    li{
+      margin:12px 0;
+      color:var(--muted);
     }
 
-    @media (prefers-reduced-motion: reduce){
-      .btn{transition:none;}
+    .grid{display:grid; gap:20px}
+    section.grid{margin-top:72px}
+    .section-head{
+      display:grid;
+      gap:12px;
+      align-items:start;
+    }
+    .section-copy{max-width:64ch}
+    .lede{
+      font-size:clamp(1.08rem, 0.96rem + 0.42vw, 1.24rem);
+      max-width:60ch;
     }
 
-
-/* Hero CTA buttons: subtle grow on hover (no shadow) */
-.hero .row > .btn{
-  transition: transform 160ms ease;
-  transform: translateZ(0);
-}
-@media (hover: hover) and (pointer: fine){
-  .hero .row > .btn:hover{
-    transform: scale(1.03);
-    box-shadow: none;
-  }
-}
-@media (prefers-reduced-motion: reduce){
-  .hero .row > .btn{ transition: none; transform: none; }
-  .hero .row > .btn:hover{ transform: none; }
-}
-
-#contact .row > .btn{
-  transition: transform 160ms ease;
-  transform: translateZ(0);
-}
-@media (hover: hover) and (pointer: fine){
-  #contact .row > .btn:hover{
-    transform: scale(1.03);
-    box-shadow: none;
-  }
-}
-@media (prefers-reduced-motion: reduce){
-  #contact .row > .btn{ transition: none; transform: none; }
-  #contact .row > .btn:hover{ transform: none; }
-}
-
-    .hero{display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:start; padding:32px 0}
-    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px}
-    .pill{display:inline-flex; align-items:center; gap:8px; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:var(--panel)}
-    h1{font-size:clamp(28px, 4vw, 44px); margin:12px 0}
-    h2{font-size:clamp(22px, 3vw, 28px); margin:0 0 12px}
-    p{line-height:1.6; color:var(--muted)}
-    .grid{display:grid; gap:16px}
-    /* extra spacing before major sections */
-    section.grid{
-      margin-top: 40px;
+    .hero-intro{
+      position:relative;
+      isolation:isolate;
+      display:grid;
+      gap:18px;
+      align-content:start;
+      overflow:hidden;
     }
+    .hero-intro::after{
+      content:"";
+      position:absolute;
+      top:-64px;
+      right:-48px;
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      background:radial-gradient(circle, color-mix(in hsl, var(--brand) 28%, transparent) 0, transparent 72%);
+      pointer-events:none;
+      z-index:0;
+    }
+    .hero-intro > *{position:relative; z-index:1}
+    .hero-highlights,
+    .tags,
+    .skill-list{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .hero-actions,
+    .contact-actions,
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .hero-actions{margin-top:10px}
+    .hero-aside{
+      display:grid;
+      gap:20px;
+      align-content:start;
+    }
+    .quick-links{
+      display:grid;
+      gap:12px;
+    }
+    .quick-link{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      min-height:64px;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:var(--panel);
+      color:var(--text);
+      transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    .quick-link:hover{text-decoration:none}
+    .quick-link-copy{
+      display:grid;
+      gap:2px;
+    }
+    .quick-link-copy strong{
+      font-size:0.98rem;
+    }
+    .quick-link-meta{
+      font-size:14px;
+      color:var(--muted);
+    }
+    .quick-link-icon{
+      font-size:18px;
+      color:var(--muted);
+    }
+    @media (hover: hover) and (pointer: fine){
+      .quick-link:hover{
+        transform:translateY(-1px);
+        background:var(--brand-soft);
+        border-color:color-mix(in hsl, var(--brand) 42%, var(--border));
+      }
+    }
+
     .grid.projects{
-    grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
-    align-items: start;
-    gap: 16px;
+      grid-template-columns:repeat(auto-fill, minmax(300px,1fr));
+      align-items:start;
+      gap:20px;
     }
-     /* --- Expanded project (desktop-only) --- */
     @media (min-width: 880px){
-      /* When any project is open, fade the others */
       .grid.projects.has-open article.project:not(.is-open){
-        opacity: 0.25;
-        filter: blur(0.2px);
-        pointer-events: none;
-        transform: scale(0.995);
+        opacity:0.22;
+        filter:blur(0.35px);
+        pointer-events:none;
+        transform:scale(0.995);
         transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
       }
-    
-      /* Expand the open one to span the whole grid width */
       .grid.projects.has-open article.project.is-open{
-        grid-column: 1 / -1;
-        z-index: 3;
+        grid-column:1 / -1;
+        z-index:3;
       }
-    
-      /* Optional: make the expanded layout feel intentional */
       .grid.projects.has-open article.project.is-open .thumb{
-        height: 240px;
+        height:260px;
       }
     }
     .card.project{
-      align-self: start;    /* ensures each card sizes to its own content */
+      align-self:start;
+      display:flex;
+      flex-direction:column;
+      min-height:440px;
+      padding:24px;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      transform-origin:center;
+      will-change:transform;
     }
-    .project h3{margin:6px 0 4px; font-size:18px}
-    .project .thumb{width:100%; height:160px; object-fit:cover; border-radius:12px; border:1px solid var(--border); background:var(--panel);}
-    /* align "Learn more" buttons across project cards */
-    .card.project{
-      display: flex;
-      flex-direction: column;
-      /* Let the card grow when details open; grid will handle row heights */
-      min-height: 420px;
+    .project{
+      position:relative;
+    }
+    .project .meta{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:14px;
+      line-height:1.4;
+      color:var(--muted);
+    }
+    .project h3{
+      margin-top:10px;
+      margin-bottom:8px;
+    }
+    .project .thumb{
+      width:100%;
+      height:184px;
+      object-fit:cover;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:var(--panel);
     }
     .card.project .row.right{
-      margin-top: auto;     /* pushes button to bottom */
-      padding-top: 0px;
-      position: relative;
-      z-index: 2;
+      margin-top:auto;
+      padding-top:24px;
+      position:relative;
+      z-index:2;
+      justify-content:flex-start;
     }
-     /* --- Project tile hover + focus affordance --- */
-    .card.project{
-      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-      transform-origin: center;
-      will-change: transform;
-    }
+    .details-toggle{width:100%}
     @media (hover: hover) and (pointer: fine){
       .card.project:hover{
-        transform: translateY(-1px) scale(1.01);
-        box-shadow: 0 10px 24px rgba(0,0,0,.24);
-        border-color: rgba(124,156,255,.30);
+        transform:translateY(-1px) scale(1.01);
+        box-shadow:0 18px 38px rgba(0,0,0,.18);
+        border-color:color-mix(in hsl, var(--brand) 42%, var(--border));
       }
-      /* Don't "bounce" an already-open tile */
       .card.project.is-open:hover{
-        transform: none;
+        transform:none;
       }
     }
-    /* Keyboard users: highlight when tabbing onto the tile's button/link */
     .card.project:focus-within{
-      transform: none; /*translateY(-1px) scale(1.008);*/
-      box-shadow: none; /*0 10px 24px rgba(0,0,0,.26);*/
-      border-color: rgba(124,156,255,.40);
+      transform:none;
+      box-shadow:none;
+      border-color:color-mix(in hsl, var(--brand) 52%, var(--border));
     }
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .card.project{
-        transition: none;
-      }
-      .card.project:hover,
-      .card.project:focus-within{
-        transform: none;
-      }
+    .project .details{
+      max-height:0;
+      opacity:0;
+      transform:translateY(-6px);
+      transition: max-height 580ms cubic-bezier(.2,.8,.2,1), opacity 360ms ease, transform 360ms ease;
+      overflow:hidden;
+      pointer-events:none;
+      will-change:max-height, opacity, transform;
     }
-    /* --- END Hover Addition --- */
-    .project { position: relative; }
-    .project .details {
-      max-height: 0;
-      opacity: 0;
-      transform: translateY(-6px);
-      transition: max-height 580ms cubic-bezier(.2,.8,.2,1),
-                  opacity 360ms ease,
-                  transform 360ms ease;
-      overflow: hidden;
-      pointer-events: none;
-      will-change: max-height, opacity, transform;
+    .project.is-open .details{
+      max-height:1400px;
+      opacity:1;
+      transform:translateY(0);
+      pointer-events:auto;
     }
-    .project.is-open .details {
-      max-height: 1400px;
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+    .details ul{margin:14px 0 0; padding-left:20px}
+    .details ul li{margin:12px 0}
+    .model-stage{
+      width:100%;
+      height:360px;
+      margin-top:16px;
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:16px;
     }
-        .details ul{ margin: 8px 0 0; padding-left: 18px; }
-        .details ul li{ margin: 10px 0; }              /* adds spacing between P/A/R */
-        .details ul li strong{ color: var(--text); }   /* optional: makes labels pop a bit */
-.tags{display:flex; gap:8px; flex-wrap:wrap; margin:8px 0}
-    .tag{font-size:11px; border:1px solid var(--border); padding:4px 8px; border-radius:999px; color:var(--muted)}
-    .meta{font-size:12px; color:var(--muted)}
+    .tags{margin:16px 0 0}
+    .tag,
+    .skill-chip{
+      display:inline-flex;
+      align-items:center;
+      min-height:32px;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--brand-soft);
+      color:var(--text);
+      font-size:13px;
+      font-weight:600;
+      line-height:1.3;
+    }
+    .meta{
+      font-size:14px;
+      line-height:1.4;
+      color:var(--muted);
+    }
+
     .more-project{
-      padding-top: 10px;
-      margin-top: 12px;
-      border-top: 1px solid var(--border);
+      padding-top:14px;
+      margin-top:14px;
+      border-top:1px solid var(--border);
     }
     .more-project:first-child{
-      border-top: 0;
-      padding-top: 0;
-      margin-top: 0;
+      border-top:0;
+      padding-top:0;
+      margin-top:0;
     }
-    .more-project h4{
-      margin: 0 0 4px;
-      font-size: 16px;
-      color: var(--text);
-    }
-    .more-project p{
-      margin: 0 0 6px;
-    }
+    .more-project h4{margin-bottom:8px}
+    .more-project p{margin-bottom:8px}
     .more-project .meta{
-      margin: 0;
-      font-size: 0.95em;
-      opacity: 0.85;
+      margin:0;
+      opacity:0.85;
     }
-/* More projects: same hover-grow affordance as project tiles */
-.more-projects-card{
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-  transform-origin: center;
-  will-change: transform;
-}
-@media (hover: hover) and (pointer: fine){
-  .more-projects-card:hover{
-    transform: translateY(-1px) scale(1.01);
-    box-shadow: 0 10px 24px rgba(0,0,0,.24);
-    border-color: rgba(124,156,255,.30);
-  }
-}
-.more-projects-card:focus-within{
-  transform: none; /*translateY(-1px) scale(1.008);*/
-  box-shadow: none; /*0 10px 24px rgba(0,0,0,.26);*/
-  border-color: rgba(124,156,255,.40);
-}
+    .more-projects-card{
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      transform-origin:center;
+      will-change:transform;
+      overflow:hidden;
+    }
+    @media (hover: hover) and (pointer: fine){
+      .more-projects-card:hover,
+      .more-projects-card:focus-within:hover{
+        transform:translateY(-1px) scale(1.01);
+        box-shadow:0 18px 38px rgba(0,0,0,.18);
+        border-color:color-mix(in hsl, var(--brand) 42%, var(--border));
+      }
+    }
+    .more-projects-card:focus-within{
+      transform:none;
+      box-shadow:none;
+      border-color:color-mix(in hsl, var(--brand) 52%, var(--border));
+    }
+    details.more-projects > summary{
+      list-style:none;
+      cursor:pointer;
+      user-select:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      min-height:64px;
+      padding:16px 18px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:var(--panel);
+    }
+    details.more-projects > summary::-webkit-details-marker{display:none}
+    details.more-projects > summary .hint{
+      font-size:14px;
+      color:var(--muted);
+      opacity:.85;
+      white-space:nowrap;
+    }
+    details.more-projects > summary::after{
+      content:"▾";
+      font-size:18px;
+      opacity:.85;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+    details.more-projects[open] > summary::after{
+      transform:rotate(-180deg);
+      opacity:1;
+    }
+    details.more-projects[open] > summary .hint{
+      display:none;
+    }
+    @media (hover: hover) and (pointer: fine){
+      details.more-projects > summary:hover{
+        background:var(--brand-soft);
+        border-color:color-mix(in hsl, var(--brand) 42%, var(--border));
+      }
+    }
 
-/* NEW: when it's focused (after click) AND hovered, let hover win */
-@media (hover: hover) and (pointer: fine){
-  .more-projects-card:hover,
-  .more-projects-card:focus-within:hover{
-    transform: translateY(-1px) scale(1.01);
-    box-shadow: 0 10px 24px rgba(0,0,0,.24);
-    border-color: rgba(124,156,255,.30);
-  }
-}    
-    
-@media (prefers-reduced-motion: reduce){
-  .more-projects-card{ transition: none; }
-  .more-projects-card:hover,
-  .more-projects-card:focus-within{ transform: none; }
-}
-
-/* More projects: obvious click affordance (chevron + hint) */
-details.more-projects > summary{
-  list-style: none;
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-
-  padding: 16px 18px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--panel);
-}
-details.more-projects > summary::-webkit-details-marker{ display: none; }
-details.more-projects > summary .hint{
-  font-size: 16px;
-  color: var(--muted);
-  opacity: .85;
-  white-space: nowrap;
-}
-details.more-projects > summary::after{
-  content: "▾";
-  font-size: 18px;
-  opacity: .85;
-  transition: transform 180ms ease, opacity 180ms ease;
-}
-details.more-projects[open] > summary::after{
-  transform: rotate(-180deg);
-  opacity: 1;
-}
-details.more-projects[open] > summary .hint{
-  display: none;
-}
-@media (hover:hover) and (pointer:fine){
-  details.more-projects > summary:hover .hint{ opacity: 1; }
-}
-    .footer{margin:40px 0 16px; font-size:13px; color:var(--muted); display:flex; gap:16px; flex-wrap:wrap; justify-content:space-between}
-    .list{display:grid; gap:10px}
-    .row{display:flex; gap:12px; align-items:center}
-
-    /* small utils */
-    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    .experience-card,
+    .contact-card{
+      display:grid;
+      gap:18px;
+    }
+    .card-head{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .card-title{
+      display:grid;
+      gap:6px;
+    }
+    .card-label{
+      margin:0;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      color:var(--brand-strong);
+    }
+    .skill-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+      gap:16px;
+    }
+    .skill-group{
+      display:grid;
+      gap:12px;
+      padding:18px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:var(--panel);
+    }
+    .footer{
+      margin:56px 0 16px;
+      padding-top:24px;
+      border-top:1px solid var(--border);
+      font-size:14px;
+      color:var(--muted);
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+    }
+    .sr-only{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
+    }
     .spacer{height:8px}
     .right{justify-content:flex-end}
 
-    @media (max-width:880px){
-      .nav-shell{
-        justify-content: center;
+    @media (prefers-reduced-motion: reduce){
+      html:focus-within{scroll-behavior:auto}
+      .btn,
+      .card.project,
+      .more-projects-card,
+      .quick-link,
+      .project .details,
+      details.more-projects > summary::after{
+        transition:none;
       }
+      .card.project:hover,
+      .card.project:focus-within,
+      .more-projects-card:hover,
+      .more-projects-card:focus-within{
+        transform:none;
+      }
+    }
+
+    @media (max-width:880px){
+      body{font-size:16px}
+      .container{padding:20px}
+      main.container{padding-top:28px}
+      .nav-shell{justify-content:center}
       .nav a.logo{
-        width: 100%;
-        text-align: center;
+        width:100%;
+        text-align:center;
       }
       .nav .links{
-        width: 100%;
-        justify-content: center;
+        width:100%;
+        justify-content:center;
       }
-      .hero{grid-template-columns:1fr;}
+      .card{padding:22px}
+      .hero{grid-template-columns:1fr}
+      section.grid{margin-top:56px}
+      .card.project{min-height:auto}
+      .card.project .row.right{padding-top:20px}
+    }
+
+    @media (max-width:640px){
+      h1{
+        max-width:none;
+        font-size:clamp(2.2rem, 11vw, 3.35rem);
+      }
+      .nav .links > *{
+        flex:1 1 calc(50% - 6px);
+      }
+      .nav .links .btn{
+        width:100%;
+      }
+      #toggleTheme{flex-basis:100%}
+      .hero-actions .btn,
+      .contact-actions .btn{
+        width:100%;
+      }
+      .quick-link{align-items:flex-start}
+      .card-head{flex-direction:column}
+      .grid.projects{grid-template-columns:1fr}
+      .model-stage{height:300px}
     }
   </style>
 </head>
@@ -356,50 +679,83 @@ details.more-projects[open] > summary .hint{
         <a class="btn secondary" href="#experience">Experience</a>
         <a class="btn secondary" href="#skills">Skills</a>
         <a class="btn secondary" href="#contact">Contact</a>
-        <button class="btn secondary" id="toggleTheme" type="button" aria-pressed="false">Theme (Light/Dark)</button>
+        <button class="btn secondary" id="toggleTheme" type="button" aria-pressed="false">Theme</button>
       </div>
     </div>
   </nav>
 
   <main id="top" class="container">
     <section class="hero">
-      <div class="card">
-        <span class="pill">Mechanical Engineer · Product Design and R&D</span>
+      <div class="card hero-intro">
+        <span class="pill">Mechanical Engineer · Product Design and R&amp;D</span>
         <h1>Designing, prototyping, and validating hardware.</h1>
-        <p>
-          M.S. Mechanical Engineering at UCSD. Experience across mechatronics, biomedical devices and mechanical testing. Comfortable bridging CAD → prototypes → analysis to move ideas into tested hardware.
+        <p class="lede">
+          M.S. Mechanical Engineering at UC San Diego with experience across mechatronics, biomedical devices, and mechanical testing. I bridge CAD, prototypes, analysis, and validation to move ideas into reliable hardware.
         </p>
-        <div class="row">
+        <div class="hero-highlights">
+          <span class="tag">Medical devices</span>
+          <span class="tag">Mechatronics</span>
+          <span class="tag">Testing &amp; validation</span>
+        </div>
+        <div class="row hero-actions">
           <a class="btn" href="#projects">View projects</a>
           <a class="btn secondary" href="mailto:apcopeland20@gmail.com">Email me</a>
         </div>
       </div>
-      <div class="card">
-        <h2>Quick links</h2>
-        <div class="list">
-          <div class="row"><span aria-hidden>📄</span> <a href="Andrew_Copeland_Resume.pdf" download="Andrew_Copeland_Resume.pdf">Download Resume (PDF)</a></div>
-          <div class="row"><span aria-hidden>💻</span> <a href="https://github.com/andrewcopeland20" target="_blank" rel="noopener">GitHub</a></div>
-          <div class="row"><span aria-hidden>🔗</span> <a href="http://www.linkedin.com/in/andrew-copeland-591857239" target="_blank" rel="noopener">LinkedIn</a></div>
+
+      <aside class="card hero-aside">
+        <div class="section-head">
+          <h2>Resume, code, and contact</h2>
+          <p class="section-copy">Everything needed to review fit quickly.</p>
         </div>
-      </div>
+        <div class="quick-links">
+          <a class="quick-link" href="Andrew_Copeland_Resume.pdf" download="Andrew_Copeland_Resume.pdf">
+            <span class="quick-link-copy">
+              <strong>Download resume</strong>
+              <span class="quick-link-meta">PDF</span>
+            </span>
+            <span class="quick-link-icon" aria-hidden="true">↓</span>
+          </a>
+          <a class="quick-link" href="https://github.com/andrewcopeland20" target="_blank" rel="noopener">
+            <span class="quick-link-copy">
+              <strong>GitHub</strong>
+              <span class="quick-link-meta">Code samples and project history</span>
+            </span>
+            <span class="quick-link-icon" aria-hidden="true">↗</span>
+          </a>
+          <a class="quick-link" href="https://www.linkedin.com/in/andrew-copeland-591857239/" target="_blank" rel="noopener">
+            <span class="quick-link-copy">
+              <strong>LinkedIn</strong>
+              <span class="quick-link-meta">Professional background and network</span>
+            </span>
+            <span class="quick-link-icon" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </aside>
     </section>
 
     <section id="projects" class="grid">
-      <h2>Highlighted projects</h2>
+      <div class="section-head">
+        <h2>Highlighted projects</h2>
+        <p class="section-copy">Projects that show end-to-end mechanical design, prototyping, controls, and validation.</p>
+      </div>
+
       <div class="grid projects">
-        <!-- RPM -->
         <article class="card project">
           <img class="thumb" src="images/thumbnails/rpm_thumbnail.jpeg" alt="Random positioning machine in lab bench setup for plant virology experiment" />
           <div class="meta">2023-2025</div>
           <h3>Random Positioning Machine (RPM)</h3>
           <p>Machine capable of reproducing microgravity conditions (less than 0.01g in 20 min operation) via two nested, independently rotating frames.</p>
           <div class="tags">
-            <span class="tag">CAD</span><span class="tag">Prototyping</span><span class="tag">Testing</span>
+            <span class="tag">CAD</span>
+            <span class="tag">Prototyping</span>
+            <span class="tag">Testing</span>
           </div>
           <div class="details" aria-hidden="true">
             <div class="spacer"></div>
             <p><strong>Overview:</strong> Two-axis random positioning machine for simulated microgravity research.</p>
             <model-viewer
+              class="model-stage"
               src="models/rpm_full_assembly_v03.glb"
               alt="RPM 3D model"
               loading="eager"
@@ -407,8 +763,7 @@ details.more-projects[open] > summary .hint{
               touch-action="pan-y"
               exposure="0.72"
               shadow-intensity="0.6"
-              shadow-softness="0.4"
-              style="width:100%; height:360px; background: var(--panel); border:1px solid var(--border); border-radius:12px;">
+              shadow-softness="0.4">
             </model-viewer>
             <ul>
               <li><strong>Problem:</strong> Enable long-duration microgravity exposure for biological samples without access to spaceflight or parabolic flights.</li>
@@ -417,19 +772,19 @@ details.more-projects[open] > summary .hint{
             </ul>
           </div>
           <div class="row right">
-            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
-              Learn more
-            </button>
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">Learn more</button>
           </div>
         </article>
-        <!-- Pessary -->
+
         <article class="card project">
           <img class="thumb" src="images/thumbnails/pessary_thumbnail.jpeg" alt="Formlabs Form 4 3d printed prototype on build plate. Early-stage prototype used for form and interaction testing. Image shown is non-final and details are limited due to NDA." />
           <div class="meta">2024-2025</div>
           <h3>Novel Medical Device - Flexible Pessary</h3>
           <p>Prototyped a patient-friendly flexible pessary and applicator with clinicians; finalized for silicone injection molding and initial IRB clinical testing for a class 2 device.</p>
           <div class="tags">
-            <span class="tag">DFM</span><span class="tag">Fixture</span><span class="tag">Report</span>
+            <span class="tag">DFM</span>
+            <span class="tag">Fixture</span>
+            <span class="tag">Report</span>
           </div>
           <div class="details" aria-hidden="true">
             <div class="spacer"></div>
@@ -441,24 +796,25 @@ details.more-projects[open] > summary .hint{
             </ul>
           </div>
           <div class="row right">
-            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
-              Learn more
-            </button>
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">Learn more</button>
           </div>
         </article>
-        <!-- Centrifuge -->
+
         <article class="card project">
           <img class="thumb" src="images/thumbnails/centrifuge_thumbnail.jpeg" alt="Custom swing bucket large diameter centrifuge installed at UCSD SME" />
           <div class="meta">2024</div>
           <h3>Large Diameter Centrifuge (LDC)</h3>
           <p>Rebuilt a 9-foot diameter centrifuge to accurately reproduce launch and hypergravity acceleration profiles with higher fidelity and expanded operating envelope.</p>
           <div class="tags">
-            <span class="tag">Firmware</span><span class="tag">Sensors</span><span class="tag">MATLAB</span>
+            <span class="tag">Firmware</span>
+            <span class="tag">Sensors</span>
+            <span class="tag">MATLAB</span>
           </div>
           <div class="details" aria-hidden="true">
             <div class="spacer"></div>
             <p><strong>Overview:</strong> Centrifuge</p>
-             <model-viewer
+            <model-viewer
+              class="model-stage"
               src="models/centrifuge_full_assembly_v02.glb"
               alt="LDC 3D model"
               loading="eager"
@@ -466,29 +822,28 @@ details.more-projects[open] > summary .hint{
               touch-action="pan-y"
               exposure="0.72"
               shadow-intensity="0.6"
-              shadow-softness="0.4"
-              style="width:100%; height:360px; background: var(--panel); border:1px solid var(--border); border-radius:12px;">
+              shadow-softness="0.4">
             </model-viewer>
             <ul>
-              <li><strong>Problem:</strong> Reproduce realistic launch and hypergravity acceleration profiles for biological and mechanical experiments, improving agreement between commanded and measured acceleration while increasing payload capacity and maximum achievable g relative to the prior iteration.</li>             
-              <li><strong>Approach:</strong> Machined and rebuilt critical mechanical components for new arm and powertrain assemblies, including the main arm, swing-bucket couplers, central shaft hub, and motor retaining block; evaluated torque and jerk limits and quantified arm deflection using SolidWorks FEA.</li>      
+              <li><strong>Problem:</strong> Reproduce realistic launch and hypergravity acceleration profiles for biological and mechanical experiments, improving agreement between commanded and measured acceleration while increasing payload capacity and maximum achievable g relative to the prior iteration.</li>
+              <li><strong>Approach:</strong> Machined and rebuilt critical mechanical components for new arm and powertrain assemblies, including the main arm, swing-bucket couplers, central shaft hub, and motor retaining block; evaluated torque and jerk limits and quantified arm deflection using SolidWorks FEA.</li>
               <li><strong>Result:</strong> Achieved significantly improved agreement between commanded and measured acceleration, reducing prior braking-related underestimation by a mean of 0.22 g; enabled profiles up to ~15 g with validated structural margin (reported factor of safety ~17.7 under worst-case assumptions).</li>
             </ul>
           </div>
           <div class="row right">
-            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
-              Learn more
-            </button>
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">Learn more</button>
           </div>
         </article>
-        <!-- Autonomous Directional Wave Spectra Drifter -->
+
         <article class="card project">
           <img class="thumb" src="images/thumbnails/buoy_thumbnail.jpeg" alt="Autonomous wave drifter buoy based on Arduino Mega, Botletics GPS shield and BNO085 9-DOF IMU" />
           <div class="meta">2025</div>
           <h3>Autonomous Drifter Buoy</h3>
           <p>Designed and built a compact, autonomous buoy system for characterizing the near-shore surface wave direction and spectral content off of Scripps pier.</p>
           <div class="tags">
-            <span class="tag">CFD</span><span class="tag">Heat Transfer</span><span class="tag">Python</span>
+            <span class="tag">CFD</span>
+            <span class="tag">Heat Transfer</span>
+            <span class="tag">Python</span>
           </div>
           <div class="details" aria-hidden="true">
             <div class="spacer"></div>
@@ -500,9 +855,7 @@ details.more-projects[open] > summary .hint{
             </ul>
           </div>
           <div class="row right">
-            <button class="btn secondary details-toggle" type="button" aria-expanded="false">
-              Learn more
-            </button>
+            <button class="btn secondary details-toggle" type="button" aria-expanded="false">Learn more</button>
           </div>
         </article>
       </div>
@@ -541,23 +894,12 @@ details.more-projects[open] > summary .hint{
           <div class="more-project">
             <h4>Compressible CFD: Supersonic Flat-Plate Solver (MATLAB)</h4>
             <p>
-              Developed a 2-D finite-difference CFD solver (MacCormack scheme) for compressible Navier–Stokes flow over a flat plate at Mach ~4.
+              Developed a 2-D finite-difference CFD solver (MacCormack scheme) for compressible Navier-Stokes flow over a flat plate at Mach ~4.
               Included viscous stresses and heat conduction, capturing expected shock and boundary-layer behavior while prioritizing algorithmic transparency over black-box solvers.
             </p>
             <p class="meta"><strong>Skills:</strong> CFD fundamentals, numerical methods, compressible flow, MATLAB</p>
           </div>
 
-          <!-- COMMENTING THIS OUT UNTIL I CAN DIG UP MORE SPECIFICS
-          <div class="more-project">
-            <h4>Vortex-Cooled Rocket Engine Cold-Flow CFD Study</h4>
-            <p>
-              Conducted a cold-flow CFD study of a vortex-cooled rocket engine using ANSYS Fluent to assess mixing behavior and wall thermal protection.
-              Evaluated turbulence, velocity fields, and wall temperatures across oxidizer-to-fuel mass-flow ratios to identify design tradeoffs.
-            </p>
-            <p class="meta"><strong>Skills:</strong> CFD setup, turbulence modeling, mesh convergence, thermal analysis</p>
-          </div>
-          -->
-          
           <div class="more-project">
             <h4>Parametric Shaft Design &amp; Failure Analysis Tool (MATLAB)</h4>
             <p>
@@ -566,19 +908,22 @@ details.more-projects[open] > summary .hint{
             </p>
             <p class="meta"><strong>Skills:</strong> machine design, structural analysis, automation, MATLAB</p>
           </div>
-
         </details>
-      </div>
-
       </div>
     </section>
 
     <section id="experience" class="grid">
-      <h2>Experience</h2>
-    
-      <div class="card">
-        <div class="row" style="justify-content:space-between">
-          <strong>Research Engineer — UC San Diego (MAE)</strong>
+      <div class="section-head">
+        <h2>Experience</h2>
+        <p class="section-copy">Roles with sustained ownership across design, fabrication, testing, and technical communication.</p>
+      </div>
+
+      <div class="card experience-card">
+        <div class="card-head">
+          <div class="card-title">
+            <p class="card-label">Research engineering</p>
+            <strong>Research Engineer — UC San Diego (MAE)</strong>
+          </div>
           <span class="meta">Jul 2023 – Aug 2025</span>
         </div>
         <ul>
@@ -586,10 +931,13 @@ details.more-projects[open] > summary .hint{
           <li>Developed MATLAB trajectory generation + vector-averaging verification; implemented a BLDC powertrain and fabricated mounts/couplers (laser cut, press brake, lathe, mill) to improve reliability and performance.</li>
         </ul>
       </div>
-    
-      <div class="card">
-        <div class="row" style="justify-content:space-between">
-          <strong>Mechanical Design Intern — UCSD Health (OBGYN)</strong>
+
+      <div class="card experience-card">
+        <div class="card-head">
+          <div class="card-title">
+            <p class="card-label">Mechanical design</p>
+            <strong>Mechanical Design Intern — UCSD Health (OBGYN)</strong>
+          </div>
           <span class="meta">Feb 2024 – Mar 2025</span>
         </div>
         <ul>
@@ -599,36 +947,60 @@ details.more-projects[open] > summary .hint{
       </div>
     </section>
 
-
     <section id="skills" class="grid">
-      <h2>Skills</h2>
+      <div class="section-head">
+        <h2>Skills</h2>
+        <p class="section-copy">Organized for fast scanning by hiring managers and technical collaborators.</p>
+      </div>
+
       <div class="card">
-        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px">
-          <div>
-            <strong>Design & Manufacturing</strong>
-            <div class="spacer"></div>
-            <div class="meta">SolidWorks · Onshape · DFM/DFA · 3D printing (SLA/FFF) · Machining (lathe/mill/laser/waterjet/press brake)</div>
+        <div class="skill-grid">
+          <div class="skill-group">
+            <h3>Design &amp; Manufacturing</h3>
+            <div class="skill-list">
+              <span class="skill-chip">SolidWorks</span>
+              <span class="skill-chip">Onshape</span>
+              <span class="skill-chip">DFM / DFA</span>
+              <span class="skill-chip">SLA / FFF printing</span>
+              <span class="skill-chip">Machining</span>
+              <span class="skill-chip">Waterjet / laser</span>
+            </div>
           </div>
-          <div>
-            <strong>Analysis & Controls</strong>
-            <div class="spacer"></div>
-            <div class="meta">MATLAB · Python · FEA (SolidWorks) · CFD/CHT (ANSYS/Fluent) · Controls (PID, motion profiles)</div>
+          <div class="skill-group">
+            <h3>Analysis &amp; Controls</h3>
+            <div class="skill-list">
+              <span class="skill-chip">MATLAB</span>
+              <span class="skill-chip">Python</span>
+              <span class="skill-chip">SolidWorks FEA</span>
+              <span class="skill-chip">ANSYS / Fluent</span>
+              <span class="skill-chip">PID control</span>
+              <span class="skill-chip">Motion profiles</span>
+            </div>
           </div>
-          <div>
-            <strong>Testing & Instrumentation</strong>
-            <div class="spacer"></div>
-            <div class="meta">DAQ &amp; data logging · Sensor calibration (RTD/thermistor/IMU) · Instron tensile/compression · Test planning &amp; validation · Git</div>
+          <div class="skill-group">
+            <h3>Testing &amp; Instrumentation</h3>
+            <div class="skill-list">
+              <span class="skill-chip">DAQ &amp; logging</span>
+              <span class="skill-chip">Sensor calibration</span>
+              <span class="skill-chip">Instron testing</span>
+              <span class="skill-chip">Validation planning</span>
+              <span class="skill-chip">Experimental reports</span>
+              <span class="skill-chip">Git</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-
     <section id="contact" class="grid">
-      <h2>Contact</h2>
-      <div class="card">
-        <p>Open to roles in product design, biomedical, R&D, and test engineering.</p>
-        <div class="row">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p class="section-copy">Open to product design, biomedical, R&amp;D, and test engineering roles.</p>
+      </div>
+
+      <div class="card contact-card">
+        <p class="lede">Best reached by email, with GitHub and LinkedIn below for additional context.</p>
+        <div class="row contact-actions">
           <a class="btn" href="mailto:apcopeland20@gmail.com">Email</a>
           <a class="btn secondary" href="https://github.com/andrewcopeland20" target="_blank" rel="noopener">GitHub</a>
           <a class="btn secondary" href="https://www.linkedin.com/in/andrew-copeland-591857239/" target="_blank" rel="noopener">LinkedIn</a>
@@ -638,45 +1010,58 @@ details.more-projects[open] > summary .hint{
 
     <footer class="footer">
       <span>© <span id="y"></span> Andrew Copeland</span>
-      <span class="meta">Built with a single HTML file. Hosted on GitHub Pages. v2.0 </span>
+      <span class="meta">Built with a single HTML file. Hosted on GitHub Pages. v2.0</span>
     </footer>
   </main>
 
   <script>
-    // year
     document.getElementById('y').textContent = new Date().getFullYear();
-    // theme toggle
+
     const btn = document.getElementById('toggleTheme');
     const key = 'andrew-theme';
-    try{
-      const saved = localStorage.getItem(key);
-      if(saved) document.documentElement.dataset.theme = saved;
-      btn.addEventListener('click',()=>{
-        const cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-        document.documentElement.dataset.theme = cur;
-        localStorage.setItem(key, cur);
-        btn.setAttribute('aria-pressed', String(cur==='dark'));
-      });
-    }catch(e){}
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    function setTheme(theme, { persist = false } = {}) {
+      document.documentElement.dataset.theme = theme;
+      btn.setAttribute('aria-pressed', String(theme === 'dark'));
+      btn.textContent = `Theme: ${theme === 'dark' ? 'Dark' : 'Light'}`;
+      if (persist) {
+        try {
+          localStorage.setItem(key, theme);
+        } catch (e) {}
+      }
+    }
+
+    let initialTheme = prefersLight ? 'light' : 'dark';
+    try {
+      const savedTheme = localStorage.getItem(key);
+      if (savedTheme === 'light' || savedTheme === 'dark') initialTheme = savedTheme;
+    } catch (e) {}
+    setTheme(initialTheme);
+
+    btn.addEventListener('click', () => {
+      const cur = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+      const next = cur === 'light' ? 'dark' : 'light';
+      setTheme(next, { persist: true });
+    });
   </script>
+
   <script>
   (function () {
     const projectsGrid = document.querySelector('.grid.projects');
     const projects = Array.from(document.querySelectorAll('article.project'));
     let openProject = null;
-    
+
     function setGridOpenState(isOpen){
       if (!projectsGrid) return;
       projectsGrid.classList.toggle('has-open', isOpen);
     }
 
-    /* -------- NEW ADDITION FOR PROJECT CARD SCROLLING STUFF --------*/
     const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobileLike =
       (window.matchMedia && window.matchMedia('(max-width: 880px)').matches) ||
       (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
 
-    // controllable smooth scroll (slower than scrollIntoView, and we can choose where to land)
     function smoothScrollToY(targetY, durationMs = 850) {
       if (prefersReducedMotion) {
         window.scrollTo(0, targetY);
@@ -701,21 +1086,16 @@ details.more-projects[open] > summary .hint{
       const nav = document.querySelector('.nav');
       const navRect = nav ? nav.getBoundingClientRect() : null;
       const navBottom = navRect ? navRect.bottom : 0;
-
       const rect = card.getBoundingClientRect();
-      const pad = 12; // gap between nav and tile
-
-      // Scroll so the card's TOP sits just below the nav's current bottom edge
+      const pad = 12;
       const targetY = window.scrollY + rect.top - navBottom - pad;
 
-      smoothScrollToY(Math.max(0, targetY), 900); // <-- increase for slower
+      smoothScrollToY(Math.max(0, targetY), 900);
     }
 
     function closeProject(card, { preserveScroll = true } = {}) {
       if (!card) return;
 
-
-      // Prevent "scrolling on collapse" by compensating for layout shift
       const beforeTop = preserveScroll ? card.getBoundingClientRect().top : 0;
 
       card.classList.remove('is-open');
@@ -752,12 +1132,11 @@ details.more-projects[open] > summary .hint{
       openProject = card;
       setGridOpenState(true);
 
-      // Align tile top under the (possibly changing) header/nav
       if (!isMobileLike) {
-      scrollCardBelowNav(card);
+        scrollCardBelowNav(card);
       }
     }
-  
+
     projects.forEach(card => {
       const btn = card.querySelector('.details-toggle');
       if (!btn) return;
@@ -769,38 +1148,27 @@ details.more-projects[open] > summary .hint{
           ? closeProject(card)
           : openProjectCard(card);
       });
-      
+
       card.addEventListener('click', e => e.stopPropagation());
     });
 
-    /* --- More Projects scroll behavior --- */
     const moreProjectsCard = document.querySelector('.more-projects-card');
     const moreProjectsDetails = moreProjectsCard?.querySelector('details.more-projects');
 
     if (moreProjectsDetails && moreProjectsCard) {
       moreProjectsDetails.addEventListener('toggle', () => {
-        if (moreProjectsDetails.open) {
-          // match project tile behavior
-          if (!isMobileLike) {
+        if (moreProjectsDetails.open && !isMobileLike) {
           scrollCardBelowNav(moreProjectsCard);
-          }
         }
       });
     }
-    
+
     document.addEventListener('click', () => closeProject(openProject));
-     
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeProject(openProject);
     });
-    
   })();
   </script>
-
-  <style>
-    /* minimal light/dark toggle using data-theme */
-    :root[data-theme="light"]{ --bg:#f7f8fb; --panel:#ffffff; --text:#0b1021; --muted:#56607a; --brand:#355cff; --ring:rgba(53,92,255,.25); --card:#ffffff; --border:#e6e9f2; }
-    :root[data-theme="dark"]{ --bg:#0b0c0f; --panel:#12141a; --text:#e8eaf2; --muted:#a9afc3; --brand:#7c9cff; --ring:rgba(124,156,255,.45); --card:#0f1117; --border:#1b1f2a; }
-  </style>
 </body>
 </html>
