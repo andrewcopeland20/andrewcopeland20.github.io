@@ -36,14 +36,23 @@
     a:hover{text-decoration:underline}
     .container{max-width:1000px; margin:0 auto; padding:24px}
     .nav{display:flex; gap:16px; align-items:center; justify-content:space-between; position:sticky; top:0; backdrop-filter:saturate(140%) blur(6px); background:color-mix(in hsl, var(--bg) 70%, transparent); border-bottom:1px solid var(--border); z-index:5}
+    .nav-shell{display:flex; align-items:center; gap:16px; justify-content:space-between; flex-wrap:wrap}
     .nav a.logo{font-weight:700; letter-spacing:.2px; color:var(--text);}
-    .nav .links{display:flex; align-items: center; gap:16px; flex-wrap:wrap}
+    .nav .links{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end}
     .nav .links a,
     .nav .links button {
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       line-height: inherit;
+    }
+    .nav .links .btn{
+      min-height: 42px;
+      padding: 9px 14px;
+      justify-content: center;
+    }
+    .nav .links .btn.secondary{
+      background: var(--panel);
     }
     button { font: inherit; }
     .btn{display:inline-flex; align-items:center; gap:8px; background:var(--brand); color:#fff; border-radius:12px; padding:10px 14px; border:0; cursor:pointer}
@@ -323,19 +332,30 @@ details.more-projects[open] > summary .hint{
     .right{justify-content:flex-end}
 
     @media (max-width:880px){
+      .nav-shell{
+        justify-content: center;
+      }
+      .nav a.logo{
+        width: 100%;
+        text-align: center;
+      }
+      .nav .links{
+        width: 100%;
+        justify-content: center;
+      }
       .hero{grid-template-columns:1fr;}
     }
   </style>
 </head>
 <body>
   <nav class="nav">
-    <div class="container" style="display:flex; align-items:center; gap:12px; justify-content:space-between">
+    <div class="container nav-shell">
       <a class="logo" href="#top">Andrew Copeland</a>
       <div class="links" role="navigation" aria-label="Primary">
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
+        <a class="btn secondary" href="#projects">Projects</a>
+        <a class="btn secondary" href="#experience">Experience</a>
+        <a class="btn secondary" href="#skills">Skills</a>
+        <a class="btn secondary" href="#contact">Contact</a>
         <button class="btn secondary" id="toggleTheme" type="button" aria-pressed="false">Theme (Light/Dark)</button>
       </div>
     </div>
