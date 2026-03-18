@@ -353,7 +353,11 @@
       align-items:start;
       gap:20px;
     }
-    @media (min-width: 880px){
+    @media (min-width: 980px){
+      .grid.projects{
+        grid-template-columns:repeat(3, minmax(0, 1fr));
+        grid-auto-flow:row;
+      }
       .grid.projects.has-open article.project:not(.is-open){
         opacity:0.22;
         filter:blur(0.35px);
@@ -362,11 +366,70 @@
         transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
       }
       .grid.projects.has-open article.project.is-open{
-        grid-column:1 / -1;
         z-index:3;
+      }
+      .grid.projects.has-open.open-project-1 article.project:nth-child(1).is-open,
+      .grid.projects.has-open.open-project-4 article.project:nth-child(4).is-open{
+        grid-column:1 / span 2;
+      }
+      .grid.projects.has-open.open-project-2 article.project:nth-child(2).is-open{
+        grid-column:1 / -1;
+        grid-row:1;
+      }
+      .grid.projects.has-open.open-project-3 article.project:nth-child(3).is-open{
+        grid-column:2 / -1;
+        grid-row:1;
       }
       .grid.projects.has-open article.project.is-open .thumb{
         height:260px;
+      }
+      .grid.projects.has-open.open-project-1 article.project:nth-child(2){
+        grid-column:3;
+        grid-row:1;
+      }
+      .grid.projects.has-open.open-project-1 article.project:nth-child(3){
+        grid-column:1;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-1 article.project:nth-child(4){
+        grid-column:2;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-2 article.project:nth-child(1){
+        grid-column:1;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-2 article.project:nth-child(3){
+        grid-column:2;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-2 article.project:nth-child(4){
+        grid-column:3;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-3 article.project:nth-child(1){
+        grid-column:1;
+        grid-row:1;
+      }
+      .grid.projects.has-open.open-project-3 article.project:nth-child(2){
+        grid-column:1;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-3 article.project:nth-child(4){
+        grid-column:2;
+        grid-row:2;
+      }
+      .grid.projects.has-open.open-project-4 article.project:nth-child(1){
+        grid-column:1;
+        grid-row:1;
+      }
+      .grid.projects.has-open.open-project-4 article.project:nth-child(2){
+        grid-column:2;
+        grid-row:1;
+      }
+      .grid.projects.has-open.open-project-4 article.project:nth-child(3){
+        grid-column:3;
+        grid-row:1;
       }
     }
     .card.project{
@@ -1043,52 +1106,19 @@
     const projectsGrid = document.querySelector('.grid.projects');
     const projects = Array.from(document.querySelectorAll('article.project'));
     let openProject = null;
+    const openIndexClasses = ['open-project-1', 'open-project-2', 'open-project-3', 'open-project-4'];
 
-    function setGridOpenState(isOpen){
+    function setGridOpenState(isOpen, openIndex = null){
       if (!projectsGrid) return;
       projectsGrid.classList.toggle('has-open', isOpen);
-    }
-
-    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isMobileLike =
-      (window.matchMedia && window.matchMedia('(max-width: 880px)').matches) ||
-      (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
-
-    function smoothScrollToY(targetY, durationMs = 850) {
-      if (prefersReducedMotion) {
-        window.scrollTo(0, targetY);
-        return;
+      openIndexClasses.forEach(cls => projectsGrid.classList.remove(cls));
+      if (isOpen && openIndex) {
+        projectsGrid.classList.add(`open-project-${openIndex}`);
       }
-      const startY = window.scrollY;
-      const delta = targetY - startY;
-      const startT = performance.now();
-
-      const easeInOutCubic = (t) =>
-        t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-      function step(now) {
-        const t = Math.min(1, (now - startT) / durationMs);
-        window.scrollTo(0, startY + delta * easeInOutCubic(t));
-        if (t < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
     }
 
-    function scrollCardBelowNav(card) {
-      const nav = document.querySelector('.nav');
-      const navRect = nav ? nav.getBoundingClientRect() : null;
-      const navBottom = navRect ? navRect.bottom : 0;
-      const rect = card.getBoundingClientRect();
-      const pad = 12;
-      const targetY = window.scrollY + rect.top - navBottom - pad;
-
-      smoothScrollToY(Math.max(0, targetY), 900);
-    }
-
-    function closeProject(card, { preserveScroll = true } = {}) {
+    function closeProject(card) {
       if (!card) return;
-
-      const beforeTop = preserveScroll ? card.getBoundingClientRect().top : 0;
 
       card.classList.remove('is-open');
       const btn = card.querySelector('.details-toggle');
@@ -1099,18 +1129,13 @@
       }
       if (details) details.setAttribute('aria-hidden', 'true');
 
-      if (preserveScroll) {
-        const afterTop = card.getBoundingClientRect().top;
-        const delta = afterTop - beforeTop;
-        if (delta) window.scrollBy(0, delta);
-      }
-
       openProject = null;
-      setGridOpenState(false);
+      setGridOpenState(false, null);
     }
 
     function openProjectCard(card) {
-      if (openProject && openProject !== card) closeProject(openProject, { preserveScroll: true });
+      if (openProject && openProject !== card) closeProject(openProject);
+      const openIndex = projects.indexOf(card) + 1;
 
       card.classList.add('is-open');
       const btn = card.querySelector('.details-toggle');
@@ -1122,11 +1147,7 @@
       if (details) details.setAttribute('aria-hidden', 'false');
 
       openProject = card;
-      setGridOpenState(true);
-
-      if (!isMobileLike) {
-        scrollCardBelowNav(card);
-      }
+      setGridOpenState(true, openIndex);
     }
 
     projects.forEach(card => {
@@ -1143,17 +1164,6 @@
 
       card.addEventListener('click', e => e.stopPropagation());
     });
-
-    const moreProjectsCard = document.querySelector('.more-projects-card');
-    const moreProjectsDetails = moreProjectsCard?.querySelector('details.more-projects');
-
-    if (moreProjectsDetails && moreProjectsCard) {
-      moreProjectsDetails.addEventListener('toggle', () => {
-        if (moreProjectsDetails.open && !isMobileLike) {
-          scrollCardBelowNav(moreProjectsCard);
-        }
-      });
-    }
 
     document.addEventListener('click', () => closeProject(openProject));
 
